@@ -7,7 +7,7 @@
 - Firstly, two relevant columns are of wrong data type: quantity and profit, both of 'double precision' data type need to be converted to 'numeric' data type.
 - Next, a RANK() function partitioned by category and ordered by product total sales is used to sort by sales.
 - These two actions are incorporated into a query using the 'products' table and accompanied by an 'inner join' with the 'orders' table.
-  >SELECT
+	SELECT
 		a.category,
 		a.product_name,
 		ROUND(CAST(SUM(sales) AS numeric), 2) AS product_total_sales,
