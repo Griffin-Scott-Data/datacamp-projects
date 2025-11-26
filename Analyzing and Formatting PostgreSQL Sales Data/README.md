@@ -10,11 +10,11 @@ ROUND(CAST(SUM(sales) AS numeric), 2) AS product_total_sales,
 ROUND(CAST(SUM(profit) AS numeric), 2) AS product_total_profit
 ```
 - Next, a RANK() function partitioned by category and ordered by product total sales is used to sort by sales.
-```
+```sql
 RANK() OVER (PARTITION BY a.category ORDER BY ROUND(CAST(SUM(sales) AS numeric), 2) DESC)
 ```
 - These two actions are incorporated into a query using the 'products' table and accompanied by an 'inner join' with the 'orders' table.
-```
+```sql
 	SELECT
 		a.category,
 		a.product_name,
@@ -27,7 +27,7 @@ RANK() OVER (PARTITION BY a.category ORDER BY ROUND(CAST(SUM(sales) AS numeric),
 	GROUP BY a.category, a.product_name
 ```
 - This query then becomes a subquery referenced by the top_five_products_each_category query, so that a 'where' clause can limit the query to only records with a product_rank of _less than or equal to 5_.
-```
+```sql
 -- top_five_products_each_category
 SELECT *
 FROM (
