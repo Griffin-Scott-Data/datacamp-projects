@@ -1,5 +1,5 @@
-Data Dictionary:
+## Data Dictionary:
 
 
-# Problem 1:
+## Problem 1:
 Find the top 5 products from each category based on highest total sales. The output should be sorted by category in ascending order and by sales in descending order within each category, i.e. within each category product with highest margin should sit on the top.
