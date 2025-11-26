@@ -15,7 +15,7 @@ RANK() OVER (PARTITION BY a.category ORDER BY ROUND(CAST(SUM(sales) AS numeric),
 ```
 - These two actions are incorporated into a query using the 'products' table and accompanied by an 'inner join' with the 'orders' table.
 ```
-SELECT
+	SELECT
 		a.category,
 		a.product_name,
 		ROUND(CAST(SUM(sales) AS numeric), 2) AS product_total_sales,
@@ -25,4 +25,22 @@ SELECT
 	INNER JOIN orders AS b
 	USING (product_id)
 	GROUP BY a.category, a.product_name
+```
+- This query then becomes a subquery referenced by the top_five_products_each_category query, so that a 'where' clause can limit the query to only records with a product_rank of _less than or equal to 5_.
+```
+-- top_five_products_each_category
+SELECT *
+FROM (
+	SELECT
+		a.category,
+		a.product_name,
+		ROUND(CAST(SUM(sales) AS numeric), 2) AS product_total_sales,
+		ROUND(CAST(SUM(profit) AS numeric), 2) AS product_total_profit,
+		RANK() OVER (PARTITION BY a.category ORDER BY ROUND(CAST(SUM(sales) AS numeric), 2) DESC) AS product_rank
+	FROM products AS a
+	INNER JOIN orders AS b
+	USING (product_id)
+	GROUP BY a.category, a.product_name
+) AS a
+WHERE product_rank <= 5;
 ```
