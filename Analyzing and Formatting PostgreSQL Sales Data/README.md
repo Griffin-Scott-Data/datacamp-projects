@@ -45,7 +45,8 @@ FROM (
 WHERE product_rank <= 5;
 ```
 
-## Problem 2: Calculate the quantity for orders with missing values in the quantity column by determining the unit price for each product_id using available order data, considering relevant pricing factors such as discount, market, or region. Then, use this unit price to estimate the missing quantity values. The calculated values should be stored in the calculated_quantity column.
+## Problem 2:
+> Calculate the quantity for orders with missing values in the quantity column by determining the unit price for each product_id using available order data, considering relevant pricing factors such as discount, market, or region. Then, use this unit price to estimate the missing quantity values. The calculated values should be stored in the calculated_quantity column.
 
 - To complete this task, the problem is broken down into parts. First, two common table expressions are created. The first establishes a list of all fields within the orders orders table that contain a null quantity.
 ```sql
