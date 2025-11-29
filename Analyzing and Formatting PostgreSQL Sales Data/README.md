@@ -44,6 +44,8 @@ FROM (
 ) AS a
 WHERE product_rank <= 5;
 ```
+## Output:
+<img width="756" height="421" alt="image" src="https://github.com/user-attachments/assets/86f7d84a-16c0-400d-b30b-5f75756b88f3" />
 
 ## Problem 2:
 > Calculate the quantity for orders with missing values in the quantity column by determining the unit price for each product_id using available order data, considering relevant pricing factors such as discount, market, or region. Then, use this unit price to estimate the missing quantity values. The calculated values should be stored in the calculated_quantity column.
@@ -91,3 +93,5 @@ FROM missing AS m
 INNER JOIN unit_prices AS u
 ON m.product_id = u.product_id;
 ```
+## Output:
+<img width="754" height="179" alt="image" src="https://github.com/user-attachments/assets/1bf5180e-21bb-4fcf-89d0-294d8c78d6aa" />
