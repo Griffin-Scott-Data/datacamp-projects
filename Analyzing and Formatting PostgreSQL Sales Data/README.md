@@ -44,3 +44,49 @@ FROM (
 ) AS a
 WHERE product_rank <= 5;
 ```
+
+## Problem 2: Calculate the quantity for orders with missing values in the quantity column by determining the unit price for each product_id using available order data, considering relevant pricing factors such as discount, market, or region. Then, use this unit price to estimate the missing quantity values. The calculated values should be stored in the calculated_quantity column.
+
+- To complete this task, the problem is broken down into parts. First, two common table expressions are created. The first establishes a list of all fields within the orders orders table that contain a null quantity.
+```sql
+WITH missing AS (
+	SELECT
+		product_id,
+		product_name,
+		sales,
+		market,
+		region,
+		discount,
+		quantity
+	FROM orders
+	JOIN products
+	USING (product_id)
+	WHERE quantity IS NULL
+),
+```
+- Next, the second CTE uses available order data to establish unit price for each product irrespective of discounts to serve as baseline price for each product.
+```sql
+unit_prices AS (
+	SELECT
+		DISTINCT product_id,
+		AVG(sales/quantity * (1 - discount)) AS unit_price
+	FROM orders
+	WHERE discount = 0 AND sales/quantity * (1 - discount) <> 0
+	GROUP BY product_id
+)
+```
+- Finally, these two CTEs are both referenced in the final query, which estimates missing quantity values for the orders identified in the 'missing' CTE with no listed quantity, by using the unit prices CTE and taking into account respective discounts.
+```sql
+SELECT
+	m.product_id,
+	m.discount,
+	m.market,
+	m.region,
+	m.sales,
+	m.quantity,
+	CASE WHEN m.discount = 0 THEN ROUND(CAST((m.sales/u.unit_price) AS numeric), 0)
+	ELSE ROUND(CAST((m.sales/(u.unit_price*(1 - m.discount))) AS numeric), 0) END AS calculated_quantity
+FROM missing AS m
+INNER JOIN unit_prices AS u
+ON m.product_id = u.product_id;
+```
