@@ -49,7 +49,15 @@ ORDER BY avg_exam_score DESC;
 - Dense_rank is used over exam score values to assign ranks based on student exam score performance, defined as 'exam_rank.'
 - Query is ordered by exam_rank in ascending order.
 ```sql
-A teacher wants to show their students their relative rank in the class, without revealing their exam scores to each other. Use a window function to assign ranks based on exam_score, ensuring that students with the same exam score share the same rank and no ranks are skipped. Return the columns attendance, hours_studied, sleep_hours, tutoring_sessions, and exam_rank. The students with the highest exam score should be at the top of the results, so order your query by exam_rank in ascending order. Limit your query to 30 students.
+SELECT
+	attendance,
+	hours_studied,
+	sleep_hours,
+	tutoring_sessions,
+	DENSE_RANK() OVER (ORDER BY exam_score DESC) AS exam_rank
+FROM student_performance
+ORDER BY exam_rank ASC
+LIMIT 30;
 ```
 ## Output:
 <img width="732" height="749" alt="image" src="https://github.com/user-attachments/assets/59e12288-7114-47af-8076-6ab5dbde4f99" />
