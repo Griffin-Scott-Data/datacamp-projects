@@ -16,8 +16,8 @@ FROM (
 	FROM student_performance
 	WHERE extracurricular_activities = 'Yes' AND hours_studied > 10
 ) AS student_extracurricular
-	GROUP BY hours_studied
-	ORDER BY hours_studied DESC;
+GROUP BY hours_studied
+ORDER BY hours_studied DESC;
 ```
 ## Output:
 <img width="740" height="752" alt="image" src="https://github.com/user-attachments/assets/fe7c85ef-7fa1-4103-b38c-b9dd8c1c9ea5" />
