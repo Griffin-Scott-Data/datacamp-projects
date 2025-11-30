@@ -11,7 +11,11 @@
 SELECT
 	hours_studied,
 	AVG(exam_score) AS avg_exam_score
-FROM (SELECT * FROM student_performance WHERE extracurricular_activities = 'Yes' AND hours_studied > 10) AS student_extracurricular
+FROM (
+	SELECT *
+	FROM student_performance
+	WHERE extracurricular_activities = 'Yes' AND hours_studied > 10
+) AS student_extracurricular
 	GROUP BY hours_studied
 	ORDER BY hours_studied DESC;
 ```
