@@ -5,7 +5,7 @@
 > Find the top 5 products from each category based on highest total sales. The output should be sorted by category in ascending order and by sales in descending order within each category, i.e. within each category product with highest margin should sit on the top.
 
 - Firstly, two relevant columns are of wrong data type: quantity and profit, both of 'double precision' data type need to be converted to 'numeric' data type.
-```
+```sql
 ROUND(CAST(SUM(sales) AS numeric), 2) AS product_total_sales,
 ROUND(CAST(SUM(profit) AS numeric), 2) AS product_total_profit
 ```
