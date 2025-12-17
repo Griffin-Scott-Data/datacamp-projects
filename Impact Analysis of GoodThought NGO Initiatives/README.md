@@ -114,4 +114,4 @@ ORDER BY region ASC;
 ```
 
 ## Output:
-<img width="754" height="179" alt="image" src="https://github.com/user-attachments/assets/1bf5180e-21bb-4fcf-89d0-294d8c78d6aa" />
+<img width="1150" height="150" alt="image" src="https://github.com/user-attachments/assets/b1f5b817-91f5-490d-beeb-a54be549b78a" />
