@@ -108,7 +108,7 @@ WITH businesses_2 AS (
 )
 ```
 
-- Then, in the main query, the subquery that joins the 'countries' and 'businesses' tables is altered to now include 'businesses_2'.
+- Then, in the main query, the subquery that joins the 'countries' and 'businesses' tables is altered to now include 'businesses_2' instead of 'businesses'.
 ```sql
 WITH businesses_2 AS (
 	SELECT * FROM businesses
