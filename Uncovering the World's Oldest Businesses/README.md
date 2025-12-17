@@ -65,50 +65,93 @@ ON data.year_founded = years.year_founded AND data.continent = years.continent;
 <img width="1152" height="201" alt="image" src="https://github.com/user-attachments/assets/431e1ba3-e539-4f17-8585-564791dd7077" />
 
 ## Problem 2:
-> Calculate the quantity for orders with missing values in the quantity column by determining the unit price for each product_id using available order data, considering relevant pricing factors such as discount, market, or region. Then, use this unit price to estimate the missing quantity values. The calculated values should be stored in the calculated_quantity column.
+> How many countries per continent lack data on the oldest businesses? Does including new_businesses change this? Count the number of countries per continent missing business data, including new_businesses; store the results in a DataFrame count_missing with columns continent and countries_without_businesses.
 
-- To complete this task, the problem is broken down into parts. First, two common table expressions are created. The first establishes a list of all fields within the orders orders table that contain a null quantity.
+### 2a:
+- First, counting the number of countries per continent missing business data.
+- To complete this task, the problem is broken down into parts.
+- A subquery is created that joins the 'countries' and 'businesses' tables.
+	- A left join is used to ensure that all records with values in 'countries' are included, regardless of whether each record has a respective value in the 'businesses' table.
 ```sql
-WITH missing AS (
-	SELECT
-		product_id,
-		product_name,
-		sales,
-		market,
-		region,
-		discount,
-		quantity
-	FROM orders
-	JOIN products
-	USING (product_id)
-	WHERE quantity IS NULL
-),
+SELECT *
+FROM countries AS c
+LEFT JOIN businesses AS b
+USING (country_code)
 ```
-- Next, the second CTE uses available order data to establish unit price for each product irrespective of discounts to serve as baseline price for each product.
-```sql
-unit_prices AS (
-	SELECT
-		DISTINCT product_id,
-		AVG(sales/quantity * (1 - discount)) AS unit_price
-	FROM orders
-	WHERE discount = 0 AND sales/quantity * (1 - discount) <> 0
-	GROUP BY product_id
-)
-```
-- Finally, these two CTEs are both referenced in the final query, which estimates missing quantity values for the orders identified in the 'missing' CTE with no listed quantity, by using the unit prices CTE and taking into account respective discounts.
+
+- Now, we calculate a count of all countries without businesses, ensuring to specify records where there is no value for business name by using a WHERE clause.
 ```sql
 SELECT
-	m.product_id,
-	m.discount,
-	m.market,
-	m.region,
-	m.sales,
-	m.quantity,
-	CASE WHEN m.discount = 0 THEN ROUND(CAST((m.sales/u.unit_price) AS numeric), 0)
-	ELSE ROUND(CAST((m.sales/(u.unit_price*(1 - m.discount))) AS numeric), 0) END AS calculated_quantity
-FROM missing AS m
-INNER JOIN unit_prices AS u
-ON m.product_id = u.product_id;
+	d.continent,
+	COUNT(*) AS countries_without_businesses
+FROM (
+	SELECT *
+	FROM countries AS c
+	LEFT JOIN businesses AS b
+	USING (country_code)
+	) AS d
+WHERE d.business IS NULL
+GROUP BY continent;
 ```
+
+## Output
+<img width="1148" height="198" alt="image" src="https://github.com/user-attachments/assets/ba0bf09c-0306-47de-b161-0583fdab4179" />
+
+### 2b:
+- Now, we will evaluate if including new_businesses changes the output.
+- This is done by creating a common table expression, 'businesses_2', that performs a union between businesses and new_businesses.
+```sql
+WITH businesses_2 AS (
+	SELECT * FROM businesses
+	UNION
+	SELECT * FROM new_businesses
+)
+```
+
+- Then, in the main query, the subquery that joins the 'countries' and 'businesses' tables is altered to now include 'businesses_2'.
+```sql
+WITH businesses_2 AS (
+	SELECT * FROM businesses
+	UNION
+	SELECT * FROM new_businesses
+)
+
+SELECT
+	d.continent,
+	COUNT(*) AS countries_without_businesses
+FROM (
+	SELECT *
+	FROM countries AS c
+	LEFT JOIN businesses_2 AS b
+	USING (country_code)
+	) AS d
+WHERE d.business IS NULL
+GROUP BY continent;
+```
+
 ## Output:
-<img width="754" height="179" alt="image" src="https://github.com/user-attachments/assets/1bf5180e-21bb-4fcf-89d0-294d8c78d6aa" />
+<img width="1148" height="198" alt="image" src="https://github.com/user-attachments/assets/9dc5c7a5-8e01-4bd4-b0b7-4512fc92a112" />
+
+There is no discernible difference in number of countries per continent lacking data on oldest businesses.
+
+## Problem 3:
+> Which business categories are best suited to last many years, and on what continent are they? Store your query with the oldest founding year for each continent and category combination. It should contain three columns: continent, category, and year_founded, in that order.
+
+- All three tables are joined together with inner joins using the country_code column.
+- MIN(year_founded), in conjunction with group by function of continent and category, identifies the oldest business for each continent and category combination, using all three tables.
+```sql
+SELECT
+	continent,
+	category,
+	MIN(year_founded) AS year_founded
+FROM businesses
+JOIN countries
+USING (country_code)
+JOIN categories
+USING (category_code)
+GROUP BY continent, category
+ORDER BY continent ASC, year_founded ASC;
+```
+
+## Output:
+<img width="1150" height="337" alt="image" src="https://github.com/user-attachments/assets/a14ac79c-4cfe-40d3-82e4-9188eeaa04ea" />
