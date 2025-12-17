@@ -79,7 +79,7 @@ USING (assignment_id)
 GROUP BY a.assignment_name, a.assignment_id
 ```
 
-- Now, the final query is created and incorporates both of these subqueries.
+- Now, the final query is created and incorporates both of these subqueries with a join statement.
 - Selections include region, assignment name, impact score, and number of donations, referencing both subqueries.
 - Selection is narrowed by a WHERE clause to only include assignments ranked with the highest impact score in their respective region.
 
