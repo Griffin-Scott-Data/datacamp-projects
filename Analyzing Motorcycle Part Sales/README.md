@@ -4,7 +4,8 @@
 ## Project Instructions:
 <img width="796" height="185" alt="image" src="https://github.com/user-attachments/assets/b3465900-f774-46d0-b871-9f363803b3a3" />
 
-- First, all relevant criteria are selecte dand aliased where necessary.
+
+- First, all relevant criteria are selected and aliased where necessary.
 - All selections are made from the 'sales' table.
 - Selections are filtered for specifically 'Wholesale' clint type.
 - Selections are grouped by product_line, month, and warehouse to allow net_revenue aggregation function.
