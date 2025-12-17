@@ -1,29 +1,26 @@
 ## Data Dictionary:
-<img width="666" height="635" alt="image" src="https://github.com/user-attachments/assets/cf41bbfe-951f-43f9-95f8-aae28124d268" />
+<img width="662" height="354" alt="image" src="https://github.com/user-attachments/assets/8e990102-d799-4dff-9efb-294a544e7487" />
 
-## Problem 1:
-> Find out how much Wholesale net revenue each product_line generated per month per warehouse in the dataset.
-  > The query should be saved as revenue_by_product_line using the SQL cell provided, and contain the following:
-        product_line,
-        month: displayed as 'June', 'July', and 'August',
-        warehouse, and
-        net_revenue: the sum of total minus the sum of payment_fee.
-  > The results should be sorted by product_line and month, followed by net_revenue in descending order.
+## Project Instructions:
+<img width="796" height="185" alt="image" src="https://github.com/user-attachments/assets/b3465900-f774-46d0-b871-9f363803b3a3" />
 
-- Firstly, two relevant columns are of wrong data type: quantity and profit, both of 'double precision' data type need to be converted to 'numeric' data type.
+- First, all relevant criteria are selecte dand aliased where necessary.
+- All selections are made from the 'sales' table.
+- Selections are filtered for specifically 'Wholesale' clint type.
+- Selections are grouped by product_line, month, and warehouse to allow net_revenue aggregation function.
+- Selections are ordered by product_line then by month, both in ascending order, and then by net_revenue in descending order.
 
 ```sql
 SELECT
-	a.category,
-	a.product_name,
-	ROUND(CAST(SUM(sales) AS numeric), 2) AS product_total_sales,
-	ROUND(CAST(SUM(profit) AS numeric), 2) AS product_total_profit,
-	RANK() OVER (PARTITION BY a.category ORDER BY ROUND(CAST(SUM(sales) AS numeric), 2) DESC) AS product_rank
-FROM products AS a
-INNER JOIN orders AS b
-USING (product_id)
-GROUP BY a.category, a.product_name
+	product_line,
+	TO_CHAR(date, 'Month') AS month,
+	warehouse,
+	SUM(total) - SUM(payment_fee) AS net_revenue
+FROM sales
+WHERE client_type = 'Wholesale'
+GROUP BY product_line, month, warehouse
+ORDER BY product_line, month, net_revenue DESC;
 ```
 
 ## Output:
-<img width="756" height="421" alt="image" src="https://github.com/user-attachments/assets/86f7d84a-16c0-400d-b30b-5f75756b88f3" />
+<img width="1155" height="448" alt="image" src="https://github.com/user-attachments/assets/a432f376-0f01-4a37-87d3-f69d2d50d923" />
