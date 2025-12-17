@@ -5,7 +5,7 @@
 > What is the oldest business on each continent? Save your query with four columns: continent, country, business, and year_founded in any order.
 
 - Two tables, 'businesses' and 'countries', are joined together into common table expression, 'data.'
-	- This is done to simplify the next steps of the solution, and because those two tables contain all the information necessary to answer the question.
+	- This is done to simplify the next steps of the solution, and because these two tables contain all the information necessary to answer the question.
 ```sql
 WITH data AS (
 SELECT *
