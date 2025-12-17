@@ -6,11 +6,31 @@
 
 ## Process
 - First, all relevant criteria are selected and aliased where necessary.
+```sql
+SELECT
+	product_line,
+	TO_CHAR(date, 'Month') AS month,
+	warehouse,
+	SUM(total) - SUM(payment_fee) AS net_revenue
+```
 - All selections are made from the 'sales' table.
+```sql
+FROM sales
+```
 - Selections are filtered for specifically 'Wholesale' client type.
+```sql
+WHERE client_type = 'Wholesale'
+```
 - Selections are grouped by product_line, month, and warehouse for the net_revenue aggregate function.
+```sql
+GROUP BY product_line, month, warehouse
+```
 - Selections are ordered by product_line then by month, both in ascending order, and then by net_revenue in descending order.
+```sql
+ORDER BY product_line, month, net_revenue DESC
+```
 
+### Final Code
 ```sql
 SELECT
 	product_line,
