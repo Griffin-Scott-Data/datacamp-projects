@@ -58,7 +58,7 @@ LIMIT 5;
 > Identify the assignment with the highest impact score in each region, ensuring that each listed assignment has received at least one donation. The output should include four columns: 1) assignment_name, 2) region, 3) impact_score, and 4) num_total_donations, sorted by region in ascending order. Include only the highest-scoring assignment per region, avoiding duplicates within the same region.
 
 - To complete this task, the problem is broken down into parts, including two subqueries.
-- A subquery is created to assign a rank to each assignment based on its impact score
+- A subquery is created to assign a rank to each assignment based on its impact score:
 ```sql
 SELECT
 	region,
@@ -67,7 +67,7 @@ SELECT
 	ROW_NUMBER() OVER (PARTITION BY region ORDER BY impact_score DESC) AS impact_score_rank
 FROM assignments
 ```
-- A second subquery is created to select the number of donations per assignment.
+- A second subquery is created to select the number of donations per assignment:
 ```sql
 SELECT
 	a.assignment_name,
