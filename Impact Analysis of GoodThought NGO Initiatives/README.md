@@ -67,7 +67,7 @@ SELECT
 	ROW_NUMBER() OVER (PARTITION BY region ORDER BY impact_score DESC) AS impact_score_rank
 FROM assignments
 ```
-- A second subquery is created to select the amount of donations per assignment.
+- A second subquery is created to select the number of donations per assignment.
 ```sql
 SELECT
 	a.assignment_name,
