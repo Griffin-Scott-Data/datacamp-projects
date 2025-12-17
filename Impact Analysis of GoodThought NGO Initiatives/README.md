@@ -13,14 +13,14 @@ Table relationships:
 - The selection is grouped by assignment_id and donor_type to categorize amount donated by project and donor type.
 ```sql
 SELECT
-		d.assignment_id,
-		d2.donor_type,
-		SUM(d.amount) AS total_donation_amount
-	FROM donations AS d
-	JOIN donors AS d2
-	USING (donor_id)
-	GROUP BY d.assignment_id, d2.donor_type
-	ORDER BY total_donation_amount DESC
+	d.assignment_id,
+	d2.donor_type,
+	SUM(d.amount) AS total_donation_amount
+FROM donations AS d
+JOIN donors AS d2
+USING (donor_id)
+GROUP BY d.assignment_id, d2.donor_type
+ORDER BY total_donation_amount DESC
 ```
 
 - Now, this CTE is referenced in the main query.
@@ -61,18 +61,18 @@ LIMIT 5;
 - A subquery is created to assign a rank to each assignment based on its impact score
 ```sql
 SELECT
-		region,
-		assignment_id,
-		impact_score,
-		ROW_NUMBER() OVER (PARTITION BY region ORDER BY impact_score DESC) AS impact_score_rank
+	region,
+	assignment_id,
+	impact_score,
+	ROW_NUMBER() OVER (PARTITION BY region ORDER BY impact_score DESC) AS impact_score_rank
 FROM assignments
 ```
 - A second subquery is created to select the amount of donations per assignment.
 ```sql
 SELECT
-		a.assignment_name,
-		a.assignment_id,
-		COUNT(d.donation_id) AS num_total_donations
+	a.assignment_name,
+	a.assignment_id,
+	COUNT(d.donation_id) AS num_total_donations
 FROM assignments AS a
 JOIN donations AS d
 USING (assignment_id)
