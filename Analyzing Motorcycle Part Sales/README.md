@@ -8,7 +8,7 @@
 - First, all relevant criteria are selected and aliased where necessary.
 - All selections are made from the 'sales' table.
 - Selections are filtered for specifically 'Wholesale' client type.
-- Selections are grouped by product_line, month, and warehouse to allow net_revenue aggregation function.
+- Selections are grouped by product_line, month, and warehouse for the net_revenue aggregate function.
 - Selections are ordered by product_line then by month, both in ascending order, and then by net_revenue in descending order.
 
 ```sql
