@@ -6,8 +6,7 @@ Table relationships:
 <img width="1670" height="900" alt="image" src="https://github.com/user-attachments/assets/4f139871-932e-417a-855e-a8ccf3a14bac" />
 
 ## Problem 1:
-> List the top five assignments based on total value of donations, categorized by donor type. The output should include four columns:
-	- 1) assignment_name, 2) region, 3) rounded_total_donation_amount rounded to two decimal places, and 4) donor_type, sorted by rounded_total_donation_amount in descending order.
+> List the top five assignments based on total value of donations, categorized by donor type. The output should include four columns: 1) assignment_name, 2) region, 3) rounded_total_donation_amount rounded to two decimal places, and 4) donor_type, sorted by rounded_total_donation_amount in descending order.
 
 - First, a common table expression is created that identifies the amount donated to *each* project categorized by *each* donor type.
 - Two tables, 'donations' and 'donors', are joined on the 'donor_id' column.
