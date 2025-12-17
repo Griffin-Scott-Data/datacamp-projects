@@ -108,7 +108,7 @@ JOIN (
 	USING (assignment_id)
 	GROUP BY a.assignment_name, a.assignment_id
 ) AS a
-	USING (assignment_id)
+USING (assignment_id)
 WHERE impact_score_rank = 1
 ORDER BY region ASC;
 ```
