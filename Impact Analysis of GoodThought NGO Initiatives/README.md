@@ -2,6 +2,7 @@
 This comprehensive dataset includes:
 <img width="906" height="55" alt="image" src="https://github.com/user-attachments/assets/4bd754fa-654f-46b2-af77-44cd27089c57" />
 
+Table relationships:
 <img width="1670" height="900" alt="image" src="https://github.com/user-attachments/assets/4f139871-932e-417a-855e-a8ccf3a14bac" />
 
 ## Problem 1:
