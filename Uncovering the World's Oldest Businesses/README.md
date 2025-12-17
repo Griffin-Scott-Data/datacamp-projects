@@ -132,7 +132,7 @@ GROUP BY continent;
 ## Output:
 <img width="1148" height="198" alt="image" src="https://github.com/user-attachments/assets/9dc5c7a5-8e01-4bd4-b0b7-4512fc92a112" />
 
-There is no discernible difference in number of countries per continent lacking data on oldest businesses.
+Including new_businesses causes no discernible difference in number of countries per continent lacking data on oldest businesses.
 
 ## Problem 3:
 > Which business categories are best suited to last many years, and on what continent are they? Store your query with the oldest founding year for each continent and category combination. It should contain three columns: continent, category, and year_founded, in that order.
